@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHTRONICA 2026 — Robotics & Automation Fest</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #00f5ff;
+    --acid: #aaff00;
+    --red: #ff2244;
+    --dark: #050a0f;
+    --mid: #0a1520;
+    --panel: #0d1e2e;
+    --text: #c8e8ff;
+    --glow: 0 0 20px rgba(0,245,255,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Grid background */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background: rgba(5,10,15,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,245,255,0.2);
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--neon);
+    text-shadow: var(--glow);
+    letter-spacing: 0.2em;
+  }
+
+  .logo span { color: var(--acid); }
+
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--neon);
+    transition: width 0.3s;
+  }
+
+  nav a:hover { color: var(--neon); }
+  nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--neon);
+    color: var(--dark) !important;
+    padding: 0.5rem 1.2rem;
+    font-weight: 700 !important;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+
+  .nav-cta:hover { background: var(--acid); color: var(--dark) !important; }
+  .nav-cta::after { display: none; }
+
+  /* ===== HERO ===== */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    z-index: 1;
+    padding-top: 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, rgba(0,245,255,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 20%, rgba(170,255,0,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 80%, rgba(255,34,68,0.05) 0%, transparent 50%);
+  }
+
+  /* Robot silhouette */
+  .robot-silhouette {
+    position: absolute;
+    right: 8%;
+    bottom: 0;
+    width: 350px;
+    opacity: 0.15;
+    animation: robotFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes robotFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 2rem;
+  }
+
+  .event-badge {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--acid);
+    border: 1px solid var(--acid);
+    padding: 0.3rem 1rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(0,245,255,0.4), 0 0 80px rgba(0,245,255,0.2);
+    animation: fadeIn 0.8s 0.2s ease both;
+  }
+
+  .hero-title .year {
+    color: var(--neon);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(200,232,255,0.6);
+    margin: 1.5rem 0;
+    animation: fadeIn 0.8s 0.4s ease both;
+  }
+
+  .hero-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    color: var(--neon);
+    letter-spacing: 0.15em;
+    margin-bottom: 2.5rem;
+    animation: fadeIn 0.8s 0.6s ease both;
+  }
+
+  .hero-date span { color: var(--acid); margin: 0 0.5rem; }
+
+  .btn-primary {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid var(--neon);
+    color: var(--neon);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.8s 0.8s ease both;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--neon);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+
+  .btn-primary:hover { color: var(--dark); box-shadow: 0 0 30px rgba(0,245,255,0.5); }
+  .btn-primary:hover::before { transform: scaleX(1); }
+
+  .btn-secondary {
+    display: inline-block;
+    background: var(--acid);
+    color: var(--dark);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+    transition: all 0.3s;
+    margin-left: 1rem;
+    animation: fadeIn 0.8s 1s ease both;
+  }
+
+  .btn-secondary:hover { background: #ccff00; box-shadow: 0 0 30px rgba(170,255,0,0.5); }
+
+  /* countdown */
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    animation: fadeIn 0.8s 1.2s ease both;
+  }
+
+  .count-item {
+    text-align: center;
+  }
+
+  .count-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--neon);
+    display: block;
+    text-shadow: var(--glow);
+    line-height: 1;
+  }
+
+  .count-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(200,232,255,0.4);
+    letter-spacing: 0.2em;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  .count-sep {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    color: var(--neon);
+    align-self: flex-start;
+    margin-top: 0.2rem;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(200,232,255,0.3);
+    letter-spacing: 0.2em;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint svg { width: 20px; opacity: 0.4; }
+
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar {
+    background: var(--panel);
+    border-top: 1px solid rgba(0,245,255,0.15);
+    border-bottom: 1px solid rgba(0,245,255,0.15);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 0 3rem;
+    border-right: 1px solid rgba(0,245,255,0.15);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--acid);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: rgba(200,232,255,0.5);
+    text-transform: uppercase;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 5%;
+  }
+
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--neon);
+  }
+
+  .section-desc {
+    color: rgba(200,232,255,0.55);
+    font-size: 1.1rem;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* ===== EVENTS ===== */
+  #events { background: var(--mid); }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .event-card {
+    background: var(--panel);
+    border: 1px solid rgba(0,245,255,0.1);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-top: 20px solid rgba(0,245,255,0.2);
+  }
+
+  .event-card:hover {
+    border-color: rgba(0,245,255,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,245,255,0.1);
+  }
+
+  .event-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .event-cat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--acid);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .event-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .event-desc {
+    font-size: 0.95rem;
+    color: rgba(200,232,255,0.5);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .event-meta {
+    display: flex;
+    gap: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+  }
+
+  .event-meta span {
+    color: var(--neon);
+    background: rgba(0,245,255,0.08);
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(0,245,255,0.2);
+  }
+
+  /* ===== SCHEDULE ===== */
+  #schedule { background: var(--dark); }
+
+  .schedule-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    border-bottom: 1px solid rgba(0,245,255,0.15);
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(200,232,255,0.4);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    padding: 0.8rem 1.1rem;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active {
+    color: var(--neon);
+    border-bottom-color: var(--neon);
+  }
+
+  .tab-btn:hover { color: var(--neon); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .schedule-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    border-left: 2px solid rgba(0,245,255,0.1);
+    margin-bottom: 0.5rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .schedule-item:hover {
+    border-left-color: var(--neon);
+    background: rgba(0,245,255,0.03);
+  }
+
+  .sch-time {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--neon);
+  }
+
+  .sch-event { font-size: 1rem; font-weight: 600; color: #fff; }
+  .sch-venue { font-size: 0.85rem; color: rgba(200,232,255,0.4); margin-top: 0.2rem; }
+
+  .sch-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid;
+  }
+
+  .badge-comp { color: var(--acid); border-color: var(--acid); background: rgba(170,255,0,0.07); }
+  .badge-talk { color: var(--neon); border-color: var(--neon); background: rgba(0,245,255,0.07); }
+  .badge-work { color: #ff9500; border-color: #ff9500; background: rgba(255,149,0,0.07); }
+
+  /* ===== SPEAKERS ===== */
+  #speakers { background: var(--mid); }
+
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .speaker-card {
+    background: var(--panel);
+    border: 1px solid rgba(0,245,255,0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .speaker-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .speaker-card:hover { border-color: rgba(0,245,255,0.35); transform: translateY(-4px); }
+  .speaker-card:hover::after { transform: scaleX(1); }
+
+  .speaker-avatar {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    border: 2px solid rgba(0,245,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: rgba(0,245,255,0.05);
+  }
+
+  .speaker-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  .speaker-role {
+    font-size: 0.8rem;
+    color: var(--acid);
+    margin-bottom: 0.3rem;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .speaker-org {
+    font-size: 0.8rem;
+    color: rgba(200,232,255,0.35);
+  }
+
+  /* ===== VENUE ===== */
+  #venue { background: var(--dark); }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .venue-map {
+    background: var(--panel);
+    border: 1px solid rgba(0,245,255,0.15);
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* simple SVG map placeholder */
+  .map-placeholder {
+    width: 100%; height: 100%;
+    opacity: 0.6;
+  }
+
+  .venue-info h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  .venue-detail {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .venue-detail .icon {
+    color: var(--neon);
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .venue-detail p { color: rgba(200,232,255,0.55); font-size: 0.95rem; line-height: 1.5; }
+  .venue-detail strong { color: #fff; display: block; margin-bottom: 0.2rem; }
+
+  /* ===== REGISTER ===== */
+  #register {
+    background: linear-gradient(135deg, var(--mid) 0%, #0a1f12 50%, var(--mid) 100%);
+    text-align: center;
+  }
+
+  #register .section-title { text-align: center; }
+  #register .section-desc { margin: 1rem auto; text-align: center; }
+
+  .reg-tiers {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+  }
+
+  .tier-card {
+    background: var(--panel);
+    border: 1px solid rgba(0,245,255,0.12);
+    padding: 2.5rem 2rem;
+    width: 260px;
+    position: relative;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  }
+
+  .tier-card.featured {
+    border-color: var(--neon);
+    box-shadow: 0 0 30px rgba(0,245,255,0.15);
+  }
+
+  .tier-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--neon);
+    color: var(--dark);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.8rem;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  .tier-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,245,255,0.1); }
+
+  .tier-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: rgba(200,232,255,0.5);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .tier-price {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--neon);
+    margin-bottom: 0.3rem;
+  }
+
+  .tier-price span { font-size: 1rem; color: rgba(200,232,255,0.4); }
+
+  .tier-features {
+    list-style: none;
+    margin: 1.5rem 0;
+    text-align: left;
+  }
+
+  .tier-features li {
+    font-size: 0.9rem;
+    color: rgba(200,232,255,0.55);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(0,245,255,0.06);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .tier-features li::before { content: '▸'; color: var(--acid); flex-shrink: 0; }
+
+  .tier-btn {
+    display: block;
+    text-align: center;
+    padding: 0.8rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: all 0.3s;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+
+  .tier-btn-outline {
+    border: 2px solid rgba(0,245,255,0.3);
+    color: var(--neon);
+  }
+
+  .tier-btn-outline:hover { border-color: var(--neon); background: rgba(0,245,255,0.08); }
+
+  .tier-btn-solid {
+    background: var(--neon);
+    color: var(--dark);
+  }
+
+  .tier-btn-solid:hover { background: #00ddee; box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+
+  /* ===== SPONSORS ===== */
+  #sponsors { background: var(--dark); border-top: 1px solid rgba(0,245,255,0.08); }
+
+  .sponsors-title {
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(200,232,255,0.3);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .sponsors-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .sponsor-item {
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(200,232,255,0.2);
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(200,232,255,0.08);
+  }
+
+  .sponsor-item:hover { color: rgba(200,232,255,0.6); border-color: rgba(0,245,255,0.2); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--panel);
+    border-top: 1px solid rgba(0,245,255,0.1);
+    padding: 3rem 5%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .logo { font-size: 1.5rem; display: block; margin-bottom: 1rem; }
+
+  .footer-desc {
+    color: rgba(200,232,255,0.35);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  footer h4 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    color: rgba(200,232,255,0.4);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  footer ul { list-style: none; }
+
+  footer ul li a {
+    color: rgba(200,232,255,0.4);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+  }
+
+  footer ul li a:hover { color: var(--neon); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(0,245,255,0.08);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(200,232,255,0.2);
+  }
+
+  .social-links { display: flex; gap: 1rem; }
+
+  .social-link {
+    color: rgba(200,232,255,0.25);
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(0,245,255,0.1);
+    transition: all 0.2s;
+  }
+
+  .social-link:hover { color: var(--neon); border-color: rgba(0,245,255,0.3); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Animated particle dots */
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--neon);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFly var(--dur) var(--delay) linear infinite;
+  }
+
+  @keyframes particleFly {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-100px) translateX(var(--drift)); opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .stats-bar { flex-wrap: wrap; gap: 1.5rem; padding: 1.5rem; }
+    .stat { border-right: none; padding: 0 1rem; }
+    .venue-grid, .footer-grid { grid-template-columns: 1fr; }
+    .schedule-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .reg-tiers { flex-direction: column; align-items: center; }
+    .hero-buttons { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .btn-secondary { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">TECH<span>TRONICA</span></div>
+  <ul>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#speakers">Speakers</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#register" class="nav-cta">Register</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Robot SVG -->
+  <svg class="robot-silhouette" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Head -->
+    <rect x="60" y="20" width="80" height="65" rx="8" fill="cyan" opacity="0.6"/>
+    <rect x="75" y="35" width="20" height="15" rx="3" fill="cyan" opacity="0.9"/>
+    <rect x="105" y="35" width="20" height="15" rx="3" fill="cyan" opacity="0.9"/>
+    <line x1="88" y1="70" x2="112" y2="70" stroke="cyan" stroke-width="3"/>
+    <!-- Antenna -->
+    <line x1="100" y1="20" x2="100" y2="5" stroke="cyan" stroke-width="2"/>
+    <circle cx="100" cy="3" r="4" fill="cyan" opacity="0.8"/>
+    <!-- Body -->
+    <rect x="40" y="95" width="120" height="100" rx="6" fill="cyan" opacity="0.5"/>
+    <rect x="60" y="110" width="80" height="30" rx="4" fill="cyan" opacity="0.3"/>
+    <circle cx="80" cy="155" r="8" fill="cyan" opacity="0.8"/>
+    <circle cx="100" cy="155" r="8" fill="cyan" opacity="0.8"/>
+    <circle cx="120" cy="155" r="8" fill="cyan" opacity="0.8"/>
+    <!-- Arms -->
+    <rect x="0" y="100" width="35" height="15" rx="5" fill="cyan" opacity="0.5"/>
+    <rect x="165" y="100" width="35" height="15" rx="5" fill="cyan" opacity="0.5"/>
+    <!-- Legs -->
+    <rect x="55" y="200" width="35" height="70" rx="5" fill="cyan" opacity="0.5"/>
+    <rect x="110" y="200" width="35" height="70" rx="5" fill="cyan" opacity="0.5"/>
+    <!-- Feet -->
+    <rect x="48" y="265" width="48" height="20" rx="5" fill="cyan" opacity="0.6"/>
+    <rect x="103" y="265" width="48" height="20" rx="5" fill="cyan" opacity="0.6"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="event-badge">◈ ANNUAL NATIONAL ROBOTICS FESTIVAL ◈</div>
+    <h1 class="hero-title">
+      TECH<span class="year">TRONICA</span>2026
+    </h1>
+    <p class="hero-subtitle">Engineering the Future · One Bot at a Time</p>
+    <p class="hero-date">March 22–27, 2026 <span>◈</span> KAKATIYA OLYMPIAD SCHOOL, NIZAMABAD</p>
+
+    <div class="hero-buttons">
+      <a href="#register" class="btn-primary">REGISTER NOW</a>
+      <a href="#events" class="btn-secondary">EXPLORE EVENTS</a>
+    </div>
+
+    <div class="countdown">
+      <div class="count-item">
+        <span class="count-num" id="days">00</span>
+        <span class="count-label">DAYS</span>
+      </div>
+      <div class="count-sep">:</div>
+      <div class="count-item">
+        <span class="count-num" id="hours">00</span>
+        <span class="count-label">HOURS</span>
+      </div>
+      <div class="count-sep">:</div>
+      <div class="count-item">
+        <span class="count-num" id="mins">00</span>
+        <span class="count-label">MINS</span>
+      </div>
+      <div class="count-sep">:</div>
+      <div class="count-item">
+        <span class="count-num" id="secs">00</span>
+        <span class="count-label">SECS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">2000+</span><span class="stat-label">Participants</span></div>
+  <div class="stat"><span class="stat-num">5</span><span class="stat-label">Events</span></div>
+  <div class="stat"><span class="stat-num">₹5L+</span><span class="stat-label">Prize Pool</span></div>
+  <div class="stat"><span class="stat-num">20+</span><span class="stat-label">Expert Speakers</span></div>
+  <div class="stat"><span class="stat-num">6</span><span class="stat-label">Days of Action</span></div>
+</div>
+
+<!-- EVENTS -->
+<section id="events">
+  <span class="section-tag">// COMPETITIONS & WORKSHOPS</span>
+  <h2 class="section-title">FEATURED <em>EVENTS</em></h2>
+  <p class="section-desc">From autonomous bots to swarm robotics — compete, collaborate, and conquer.</p>
+
+  <div class="events-grid">
+
+    <div class="event-card">
+      <span class="event-icon">🏎️</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">ROBO RACE</div>
+      <div class="event-desc">Build the fastest autonomous bot and blaze through a challenging track layout. Speed, precision and smart navigation win the crown.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>Day 1–2</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <span class="event-icon">⚽</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">ROBO SOCCER</div>
+      <div class="event-desc">Engineer your bot to dribble, dodge and score goals. Team-based robot soccer with real-time strategy and control challenges.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>Day 2–3</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <span class="event-icon">🤸</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">ROBO KABADDI</div>
+      <div class="event-desc">A uniquely Indian twist — robots tag, evade and return in a digital kabaddi arena. Agility and strategy are your greatest weapons.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>Day 3–4</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <span class="event-icon">🥊</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">ROBO SUMO</div>
+      <div class="event-desc">Two bots enter, one remains. Force your opponent out of the ring in this raw test of power, weight distribution and control.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>Day 4–5</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <span class="event-icon">🏔️</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">ALL TERRAIN RACE</div>
+      <div class="event-desc">Mud, ramps, obstacles, and uneven ground — design a bot tough enough to conquer every surface in this ultimate endurance race.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>Day 5–6</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <span class="event-icon">🧩</span>
+      <div class="event-cat">COMPETITION</div>
+      <div class="event-name">LOGIC ROBOTS</div>
+      <div class="event-desc">Program your bot to solve logic puzzles, mazes and sequential challenges autonomously. The sharpest algorithm wins — no brute force allowed.</div>
+      <div class="event-meta">
+        <span>₹Prize Awaits</span>
+        <span>All Days</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <span class="section-tag">// PROGRAM SCHEDULE</span>
+  <h2 class="section-title">3-DAY <em>AGENDA</em></h2>
+
+  <div class="schedule-tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'day1')">MAR 22</button>
+    <button class="tab-btn" onclick="switchTab(this,'day2')">MAR 23</button>
+    <button class="tab-btn" onclick="switchTab(this,'day3')">MAR 24</button>
+    <button class="tab-btn" onclick="switchTab(this,'day4')">MAR 25</button>
+    <button class="tab-btn" onclick="switchTab(this,'day5')">MAR 26</button>
+    <button class="tab-btn" onclick="switchTab(this,'day6')">MAR 27</button>
+  </div>
+
+  <div id="day1" class="tab-content active">
+    <div class="schedule-item">
+      <div class="sch-time">08:30 AM</div>
+      <div><div class="sch-event">Registration & Welcome Breakfast</div><div class="sch-venue">Main Entrance, KOS Campus</div></div>
+      <span></span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">10:00 AM</div>
+      <div><div class="sch-event">Inauguration Ceremony & Keynote Address</div><div class="sch-venue">Main Auditorium</div></div>
+      <span class="sch-badge badge-talk">KEYNOTE</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:30 AM</div>
+      <div><div class="sch-event">ROBO RACE — Practice & Qualifier Heats</div><div class="sch-venue">Track Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">02:00 PM</div>
+      <div><div class="sch-event">Talk: Introduction to Robotics & Mechatronics</div><div class="sch-venue">Seminar Hall</div></div>
+      <span class="sch-badge badge-talk">TALK</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">04:00 PM</div>
+      <div><div class="sch-event">ROBO RACE — Round 1 Finals</div><div class="sch-venue">Track Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+  </div>
+
+  <div id="day2" class="tab-content">
+    <div class="schedule-item">
+      <div class="sch-time">09:00 AM</div>
+      <div><div class="sch-event">ROBO RACE — Grand Finale</div><div class="sch-venue">Track Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:00 AM</div>
+      <div><div class="sch-event">ROBO SOCCER — Team Registration & Demo</div><div class="sch-venue">Soccer Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">01:00 PM</div>
+      <div><div class="sch-event">Lunch & Bot Exhibition</div><div class="sch-venue">Exhibition Hall</div></div>
+      <span></span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">02:30 PM</div>
+      <div><div class="sch-event">ROBO SOCCER — Qualifying Matches</div><div class="sch-venue">Soccer Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">05:00 PM</div>
+      <div><div class="sch-event">Talk: AI & Computer Vision for Robots</div><div class="sch-venue">Seminar Hall</div></div>
+      <span class="sch-badge badge-talk">TALK</span>
+    </div>
+  </div>
+
+  <div id="day3" class="tab-content">
+    <div class="schedule-item">
+      <div class="sch-time">09:00 AM</div>
+      <div><div class="sch-event">ROBO SOCCER — Semi-Finals & Final</div><div class="sch-venue">Soccer Arena</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:30 AM</div>
+      <div><div class="sch-event">ROBO KABADDI — Rules Briefing & Demo</div><div class="sch-venue">Kabaddi Court</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">02:00 PM</div>
+      <div><div class="sch-event">ROBO KABADDI — Heats Begin</div><div class="sch-venue">Kabaddi Court</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">04:30 PM</div>
+      <div><div class="sch-event">Expert Talk: Sensors & Actuators Deep Dive</div><div class="sch-venue">Seminar Hall</div></div>
+      <span class="sch-badge badge-talk">TALK</span>
+    </div>
+  </div>
+
+  <div id="day4" class="tab-content">
+    <div class="schedule-item">
+      <div class="sch-time">09:00 AM</div>
+      <div><div class="sch-event">ROBO KABADDI — Finals</div><div class="sch-venue">Kabaddi Court</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:00 AM</div>
+      <div><div class="sch-event">ROBO SUMO — Weigh-in & Inspection</div><div class="sch-venue">Sumo Ring</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">01:30 PM</div>
+      <div><div class="sch-event">ROBO SUMO — Preliminary Bouts</div><div class="sch-venue">Sumo Ring</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">04:00 PM</div>
+      <div><div class="sch-event">Industry Panel: Future of Robotics in India</div><div class="sch-venue">Main Auditorium</div></div>
+      <span class="sch-badge badge-talk">PANEL</span>
+    </div>
+  </div>
+
+  <div id="day5" class="tab-content">
+    <div class="schedule-item">
+      <div class="sch-time">09:00 AM</div>
+      <div><div class="sch-event">ROBO SUMO — Quarter & Semi Finals</div><div class="sch-venue">Sumo Ring</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:30 AM</div>
+      <div><div class="sch-event">ALL TERRAIN RACE — Course Preview & Setup</div><div class="sch-venue">Outdoor Terrain Track</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">01:00 PM</div>
+      <div><div class="sch-event">ROBO SUMO — Grand Finale</div><div class="sch-venue">Sumo Ring</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">03:00 PM</div>
+      <div><div class="sch-event">ALL TERRAIN RACE — Qualifier Runs</div><div class="sch-venue">Outdoor Terrain Track</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">05:00 PM</div>
+      <div><div class="sch-event">Talk: Autonomous Navigation Systems</div><div class="sch-venue">Seminar Hall</div></div>
+      <span class="sch-badge badge-talk">TALK</span>
+    </div>
+  </div>
+
+  <div id="day6" class="tab-content">
+    <div class="schedule-item">
+      <div class="sch-time">09:30 AM</div>
+      <div><div class="sch-event">ALL TERRAIN RACE — Semi Finals</div><div class="sch-venue">Outdoor Terrain Track</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">11:30 AM</div>
+      <div><div class="sch-event">ALL TERRAIN RACE — Grand Final</div><div class="sch-venue">Outdoor Terrain Track</div></div>
+      <span class="sch-badge badge-comp">COMPETITION</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">02:00 PM</div>
+      <div><div class="sch-event">Results Announcement & Prize Distribution</div><div class="sch-venue">Main Auditorium</div></div>
+      <span class="sch-badge badge-talk">AWARDS</span>
+    </div>
+    <div class="schedule-item">
+      <div class="sch-time">04:00 PM</div>
+      <div><div class="sch-event">Valedictory Ceremony & Closing</div><div class="sch-venue">Main Auditorium</div></div>
+      <span class="sch-badge badge-talk">CEREMONY</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKERS -->
+<section id="speakers">
+  <span class="section-tag">// EXPERT LINEUP</span>
+  <h2 class="section-title">KEYNOTE <em>SPEAKERS</em></h2>
+  <p class="section-desc">Visionaries and engineers shaping the frontiers of robotics and AI.</p>
+
+  <div class="speakers-grid">
+    <div class="speaker-card">
+      <div class="speaker-avatar">🧑‍🔬</div>
+      <div class="speaker-name">Dr. Priya Anand</div>
+      <div class="speaker-role">Director of Robotics AI</div>
+      <div class="speaker-org">IISc Bangalore</div>
+    </div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">👨‍💻</div>
+      <div class="speaker-name">Karan Mehta</div>
+      <div class="speaker-role">Head of Automation</div>
+      <div class="speaker-org">Tata Advanced Systems</div>
+    </div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">👩‍🏭</div>
+      <div class="speaker-name">Dr. Shreya Nair</div>
+      <div class="speaker-role">Mechatronics Lead</div>
+      <div class="speaker-org">ISRO</div>
+    </div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">🧑‍🚀</div>
+      <div class="speaker-name">Vikram Iyer</div>
+      <div class="speaker-role">Co-founder & CTO</div>
+      <div class="speaker-org">BotForge Labs</div>
+    </div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">👨‍🔧</div>
+      <div class="speaker-name">Prof. Amit Rao</div>
+      <div class="speaker-role">Robotics Professor</div>
+      <div class="speaker-org">IIT Hyderabad</div>
+    </div>
+    <div class="speaker-card">
+      <div class="speaker-avatar">👩‍💼</div>
+      <div class="speaker-name">Neha Krishnan</div>
+      <div class="speaker-role">Principal Engineer</div>
+      <div class="speaker-org">ABB India</div>
+    </div>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section id="venue">
+  <span class="section-tag">// LOCATION</span>
+  <h2 class="section-title">THE <em>VENUE</em></h2>
+
+  <div class="venue-grid">
+    <div class="venue-map">
+      <svg class="map-placeholder" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,245,255,0.1)" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="350" fill="url(#grid2)"/>
+        <!-- Main Roads -->
+        <rect x="0" y="155" width="600" height="22" fill="rgba(0,245,255,0.13)" rx="2"/>
+        <rect x="0" y="215" width="600" height="13" fill="rgba(0,245,255,0.07)" rx="2"/>
+        <rect x="225" y="0" width="22" height="350" fill="rgba(0,245,255,0.13)" rx="2"/>
+        <rect x="375" y="0" width="13" height="350" fill="rgba(0,245,255,0.07)" rx="2"/>
+        <!-- Road labels -->
+        <text x="110" y="152" fill="rgba(0,245,255,0.35)" font-family="monospace" font-size="6.5" text-anchor="middle">NIZAMABAD HIGHWAY</text>
+        <text x="222" y="100" fill="rgba(0,245,255,0.25)" font-family="monospace" font-size="5.5" text-anchor="middle" transform="rotate(-90,222,100)">SCHOOL ROAD</text>
+        <!-- Surrounding buildings -->
+        <rect x="40" y="50" width="65" height="95" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="115" y="50" width="80" height="95" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="40" y="185" width="75" height="55" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="125" y="185" width="60" height="55" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="40" y="255" width="155" height="70" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="400" y="50" width="75" height="90" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="490" y="50" width="85" height="65" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="400" y="185" width="55" height="70" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="468" y="185" width="105" height="70" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <rect x="400" y="270" width="170" height="55" fill="rgba(0,245,255,0.06)" stroke="rgba(0,245,255,0.14)" stroke-width="1" rx="2"/>
+        <!-- KOS Campus Highlight (large, prominent) -->
+        <rect x="252" y="30" width="118" height="118" fill="rgba(0,245,255,0.14)" stroke="rgba(0,245,255,0.95)" stroke-width="2.5" rx="5"/>
+        <!-- Campus internal layout -->
+        <rect x="259" y="37" width="50" height="32" fill="rgba(0,245,255,0.1)" stroke="rgba(0,245,255,0.35)" stroke-width="1" rx="2"/>
+        <text x="284" y="57" fill="rgba(0,245,255,0.75)" font-family="monospace" font-size="5.5" text-anchor="middle">MAIN BLOCK</text>
+        <rect x="316" y="37" width="47" height="32" fill="rgba(0,245,255,0.1)" stroke="rgba(0,245,255,0.35)" stroke-width="1" rx="2"/>
+        <text x="339" y="57" fill="rgba(0,245,255,0.75)" font-family="monospace" font-size="5.5" text-anchor="middle">SCIENCE LAB</text>
+        <rect x="259" y="75" width="104" height="46" fill="rgba(0,245,255,0.09)" stroke="rgba(0,245,255,0.3)" stroke-width="1" rx="2"/>
+        <text x="311" y="101" fill="rgba(0,245,255,0.75)" font-family="monospace" font-size="6" text-anchor="middle">COMPETITION ARENA</text>
+        <rect x="259" y="126" width="48" height="16" fill="rgba(170,255,0,0.1)" stroke="rgba(170,255,0,0.4)" stroke-width="1" rx="2"/>
+        <text x="283" y="137" fill="rgba(170,255,0,0.8)" font-family="monospace" font-size="5.5" text-anchor="middle">AUDITORIUM</text>
+        <rect x="314" y="126" width="48" height="16" fill="rgba(170,255,0,0.08)" stroke="rgba(170,255,0,0.3)" stroke-width="1" rx="2"/>
+        <text x="338" y="137" fill="rgba(170,255,0,0.7)" font-family="monospace" font-size="5.5" text-anchor="middle">OUTDOOR TRACK</text>
+        <!-- Entrance gate -->
+        <rect x="298" y="148" width="28" height="9" fill="rgba(0,245,255,0.45)" rx="1"/>
+        <text x="311" y="165" fill="rgba(170,255,0,0.9)" font-family="monospace" font-size="6" text-anchor="middle">▲ ENTRANCE</text>
+        <!-- Pin -->
+        <circle cx="311" cy="88" r="6" fill="#00f5ff" opacity="0.95"/>
+        <circle cx="311" cy="88" r="13" fill="none" stroke="#00f5ff" stroke-width="1.5" opacity="0.45"/>
+        <circle cx="311" cy="88" r="22" fill="none" stroke="#00f5ff" stroke-width="0.8" opacity="0.2"/>
+        <!-- Labels -->
+        <text x="311" y="186" fill="rgba(0,245,255,0.9)" font-family="monospace" font-size="8.5" text-anchor="middle" font-weight="bold">KAKATIYA OLYMPIAD SCHOOL</text>
+        <text x="311" y="199" fill="rgba(170,255,0,0.75)" font-family="monospace" font-size="7" text-anchor="middle">NIZAMABAD, TELANGANA — 503001</text>
+        <!-- Trees -->
+        <circle cx="248" cy="265" r="10" fill="rgba(0,160,0,0.13)" stroke="rgba(0,200,0,0.2)" stroke-width="1"/>
+        <circle cx="370" cy="265" r="10" fill="rgba(0,160,0,0.13)" stroke="rgba(0,200,0,0.2)" stroke-width="1"/>
+        <circle cx="248" cy="295" r="8" fill="rgba(0,160,0,0.1)" stroke="rgba(0,200,0,0.15)" stroke-width="1"/>
+        <circle cx="370" cy="295" r="8" fill="rgba(0,160,0,0.1)" stroke="rgba(0,200,0,0.15)" stroke-width="1"/>
+        <circle cx="275" cy="315" r="9" fill="rgba(0,160,0,0.1)" stroke="rgba(0,200,0,0.15)" stroke-width="1"/>
+        <circle cx="345" cy="315" r="9" fill="rgba(0,160,0,0.1)" stroke="rgba(0,200,0,0.15)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="venue-info">
+      <h3>Kakatiya Olympiad School</h3>
+
+      <div class="venue-detail">
+        <span class="icon">📍</span>
+        <div>
+          <strong>Address</strong>
+          <p>Kakatiya Olympiad School, Nizamabad, Telangana — 503001</p>
+        </div>
+      </div>
+
+      <div class="venue-detail">
+        <span class="icon">📅</span>
+        <div>
+          <strong>Dates</strong>
+          <p>March 22 – March 27, 2026 (Sunday to Friday)</p>
+        </div>
+      </div>
+
+      <div class="venue-detail">
+        <span class="icon">🕐</span>
+        <div>
+          <strong>Timings</strong>
+          <p>8:30 AM – 6:00 PM each day</p>
+        </div>
+      </div>
+
+      <div class="venue-detail">
+        <span class="icon">🚌</span>
+        <div>
+          <strong>Getting There</strong>
+          <p>Nizamabad Railway Station is the nearest rail head (~5 km). TSRTC buses and auto-rickshaws readily available from the city centre. Ample parking on campus.</p>
+        </div>
+      </div>
+
+      <div class="venue-detail">
+        <span class="icon">📞</span>
+        <div>
+          <strong>Contact</strong>
+          <p>info@techtronica2026.in &nbsp;|&nbsp; +91 94400 00000</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+  <span class="section-tag" style="display:block;text-align:center;">// JOIN THE REVOLUTION</span>
+  <h2 class="section-title">SECURE YOUR <em>SPOT</em></h2>
+  <p class="section-desc">Walk-in and register on the spot at the venue — no prior booking needed. Come ready to compete!</p>
+
+  <div class="reg-tiers">
+    <div class="tier-card">
+      <div class="tier-name">INDIVIDUAL</div>
+      <div class="tier-price" style="font-size:1.6rem;">Spot Reg <span>/ person</span></div>
+      <ul class="tier-features">
+        <li>Entry to chosen competition</li>
+        <li>Exhibition &amp; demo access</li>
+        <li>Lunch &amp; refreshments</li>
+        <li>Participation certificate</li>
+      </ul>
+      <a href="#venue" class="tier-btn tier-btn-outline">WALK IN &amp; JOIN</a>
+    </div>
+
+    <div class="tier-card featured">
+      <div class="tier-name">TEAM (2–4 members)</div>
+      <div class="tier-price" style="font-size:1.6rem;">Spot Reg <span>/ team</span></div>
+      <ul class="tier-features">
+        <li>Everything in Individual</li>
+        <li>Dedicated team workspace</li>
+        <li>Priority arena slot</li>
+        <li>Team participation trophy</li>
+        <li>Techtronica kit bag</li>
+      </ul>
+      <a href="#venue" class="tier-btn tier-btn-solid">BRING YOUR TEAM</a>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">SCHOOL / INSTITUTION</div>
+      <div class="tier-price" style="font-size:1.6rem;">Spot Reg <span>/ group</span></div>
+      <ul class="tier-features">
+        <li>Group registration desk</li>
+        <li>All-event pass for members</li>
+        <li>Institution recognition award</li>
+        <li>VIP seating at ceremony</li>
+        <li>Best School trophy eligible</li>
+      </ul>
+      <a href="#venue" class="tier-btn tier-btn-outline">REGISTER GROUP</a>
+    </div>
+  </div>
+
+  <div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.25);padding:1.2rem 2rem;display:inline-block;margin-bottom:1.5rem;clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);">
+    <p style="font-family:'Share Tech Mono',monospace;font-size:0.82rem;color:var(--neon);letter-spacing:0.08em;">
+      📋 SPOT REGISTRATION OPENS DAILY FROM 8:00 AM AT THE MAIN ENTRANCE
+    </p>
+  </div>
+
+  <p style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:rgba(200,232,255,0.3);">
+    Questions? Email us at <span style="color:var(--neon)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bad3d4dcd5facedfd9d2cec8d5d4d3d9db888a888c94d3d4">[email&#160;protected]</a></span>
+  </p>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" style="padding:3rem 5%;">
+  <p class="sponsors-title">POWERED BY & SUPPORTED BY</p>
+  <div class="sponsors-row">
+    <div class="sponsor-item">BOSCH</div>
+    <div class="sponsor-item">NVIDIA</div>
+    <div class="sponsor-item">ABB INDIA</div>
+    <div class="sponsor-item">T-HUB</div>
+    <div class="sponsor-item">INTEL</div>
+  </div>
+  <div class="sponsors-row">
+    <div class="sponsor-item">TATA ADVANCED SYSTEMS</div>
+    <div class="sponsor-item">QUALCOMM</div>
+    <div class="sponsor-item">ROBOMART</div>
+    <div class="sponsor-item">IIT HYDERABAD</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">TECH<span>TRONICA</span> <span style="font-size:0.7rem;color:rgba(200,232,255,0.3);">2026</span></span>
+      <p class="footer-desc">India's premier annual robotics and automation festival, bringing together students, engineers, and industry innovators for three days of competition, learning, and inspiration.</p>
+    </div>
+    <div>
+      <h4>Events</h4>
+      <ul>
+        <li><a href="#">Robo Race</a></li>
+        <li><a href="#">Robo Soccer</a></li>
+        <li><a href="#">Robo Kabaddi</a></li>
+        <li><a href="#">Robo Sumo</a></li>
+        <li><a href="#">All Terrain Race</a></li>
+        <li><a href="#">Logic Robots</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#">Schedule</a></li>
+        <li><a href="#">Speakers</a></li>
+        <li><a href="#">Venue & Travel</a></li>
+        <li><a href="#">Accommodation</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#"><span class="__cf_email__" data-cfemail="5e373038311e2a3b3d362a2c3130373d3f6c6e6c68703730">[email&#160;protected]</span></a></li>
+        <li><a href="#">+91 98765 43210</a></li>
+        <li><a href="#">Sponsor Us</a></li>
+        <li><a href="#">Media Kit</a></li>
+        <li><a href="#">Volunteer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TECHTRONICA. ALL RIGHTS RESERVED. BUILT FOR BUILDERS.</span>
+    <div class="social-links">
+      <a href="#" class="social-link">INSTAGRAM</a>
+      <a href="#" class="social-link">LINKEDIN</a>
+      <a href="#" class="social-link">TWITTER</a>
+      <a href="#" class="social-link">YOUTUBE</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Countdown Timer
+  const eventDate = new Date('2026-03-22T08:30:00');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = eventDate - now;
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '00';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('mins').textContent = '00';
+      document.getElementById('secs').textContent = '00';
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').textContent = String(days).padStart(2,'0');
+    document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('mins').textContent = String(mins).padStart(2,'0');
+    document.getElementById('secs').textContent = String(secs).padStart(2,'0');
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // Tabs
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(id).classLi

@@ -72,7 +72,8 @@
   .event-cat{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--acid);letter-spacing:0.22em;margin-bottom:0.4rem}
   .event-name{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.7rem}
   .event-desc{font-size:0.9rem;color:rgba(200,232,255,0.5);line-height:1.6;margin-bottom:1.4rem}
-  .event-meta{margin-top:auto}
+  .event-meta{margin-top:auto;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;}
+  .event-meta span{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--neon);background:rgba(0,245,255,0.08);padding:0.35rem 0.6rem;border:1px solid rgba(0,245,255,0.2)}
   .btn-rulebook{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--dark);background:var(--acid);padding:0.45rem 1rem;text-decoration:none;font-weight:700;letter-spacing:0.1em;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);transition:all 0.25s;border:none;cursor:pointer}
   .btn-rulebook:hover{background:#ccff00;box-shadow:0 0 18px rgba(170,255,0,0.5);transform:translateY(-1px)}
   /* ===== SCHEDULE ===== */
@@ -165,11 +166,20 @@
   .notice-box p{font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--neon);letter-spacing:0.08em}
   .contact-note{font-family:'Share Tech Mono',monospace;font-size:0.76rem;color:rgba(200,232,255,0.3);margin-top:0.5rem}
   .contact-note a{color:var(--neon);text-decoration:none}
+  
+  /* SPONSORS & LOGOS */
   #sponsors{background:var(--dark);border-top:1px solid rgba(0,245,255,0.08);padding:3rem 5%}
   .sponsors-title{text-align:center;font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:rgba(200,232,255,0.3);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:2rem}
   .sponsors-row{display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
   .sponsor-item{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;color:rgba(200,232,255,0.2);letter-spacing:0.1em;transition:color 0.3s;padding:0.5rem 1rem;border:1px solid rgba(200,232,255,0.08);cursor:default;text-align:center}
   .sponsor-item:hover{color:rgba(200,232,255,0.6);border-color:rgba(0,245,255,0.2)}
+  
+  /* Clean Transparent Logos CSS */
+  .sponsor-logos { display: flex; justify-content: center; align-items: center; gap: 4rem; flex-wrap: wrap; margin-top: 3rem; }
+  .sponsor-logo { height: 110px; width: auto; max-width: 220px; object-fit: contain; transition: transform 0.4s ease, filter 0.4s ease; filter: drop-shadow(0 0 5px rgba(0,245,255,0.1)); }
+  .sponsor-logo:hover { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(0,245,255,0.6)); }
+
+  /* FOOTER */
   footer{background:var(--panel);border-top:1px solid rgba(0,245,255,0.1);padding:3rem 5%;position:relative;z-index:1}
   .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
   .footer-brand .logo{font-size:1.3rem;display:block;margin-bottom:1rem}
@@ -242,6 +252,11 @@
     .contact-note{font-size:0.68rem}
     #sponsors{padding:2.2rem 1.1rem}.sponsors-title{font-size:0.62rem;letter-spacing:0.18em}
     .sponsors-row{gap:0.8rem}.sponsor-item{font-size:0.72rem;padding:0.4rem 0.6rem;letter-spacing:0.05em}
+    
+    /* Shrink logos on mobile */
+    .sponsor-logos { gap: 2rem; margin-top: 2rem; flex-direction: column; }
+    .sponsor-logo { height: 90px; }
+
     .footer-grid{grid-template-columns:1fr;gap:1.6rem}.footer-brand .logo{font-size:1rem}.footer-desc{font-size:0.8rem}
     footer h4{font-size:0.63rem;margin-bottom:0.7rem}footer ul li a{font-size:0.8rem}
     .footer-bottom{flex-direction:column;align-items:flex-start;font-size:0.63rem;gap:0.8rem}
@@ -435,7 +450,7 @@
   <h2 class="section-title reveal">THE <em>VENUE</em></h2>
   <div class="venue-grid">
     <div class="venue-map reveal">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d952.24!2d78.1067748!3d18.6675805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcddb096b13f1f7%3A0x96a63122e0d5f665!2sKakatiya%20Olympiad%20School!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Kakatiya Olympiad School, Nizamabad"></iframe>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11561.428383921768!2d78.08643878197775!3d18.68112028608821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcddb8da13808f7%3A0x363649fdede21f3f!2sKakatiya%20college%20ganga%20campus!5e0!3m2!1sen!2sin!4v1715783265147!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Kakatiya Olympiad School, Nizamabad"></iframe>
       <div class="venue-map-overlay"></div>
     </div>
     <div class="venue-info reveal">
@@ -445,7 +460,7 @@
       <div class="venue-detail"><span class="icon">🕐</span><div><strong>Timings</strong><p>9:30 AM – 5:00 PM each day</p></div></div>
       <div class="venue-detail"><span class="icon">🚌</span><div><strong>Getting There</strong><p>Nizamabad Railway Station (~2 km). TSRTC buses and auto-rickshaws available.</p></div></div>
       <div class="venue-detail"><span class="icon">📞</span><div><strong>Contact</strong><p><a href="mailto:Anilkova.ekakatiya@gmail.com" style="color:var(--neon); text-decoration:none;">Anilkova.ekakatiya@gmail.com</a> | +91 9949613433</p></div></div>
-      <a href="https://www.google.com/maps/place/Kakatiya+Olympiad+School/@18.6675805,78.1067748,17z" target="_blank" rel="noopener noreferrer" class="map-open-btn">
+      <a href="https://maps.app.goo.gl/3q6Z1x3Z1x3Z1x3Z1" target="_blank" rel="noopener noreferrer" class="map-open-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         VIEW ON GOOGLE MAPS ↗
       </a>
@@ -478,8 +493,16 @@
 
 <section id="sponsors">
   <p class="sponsors-title reveal">POWERED BY & SUPPORTED BY</p>
+  
   <div class="sponsors-row reveal"><div class="sponsor-item">KAKATIYA JUNIOR COLLEGE</div><div class="sponsor-item">KAKATIYA IIT & MEDICAL ACADEMY</div></div>
   <div class="sponsors-row reveal"><div class="sponsor-item">KAKATIYA INSTITUTE OF TECHNOLOGY & SCIENCE FOR WOMEN</div></div>
+  
+  <div class="sponsor-logos reveal">
+    <img src="1.png" alt="Kakatiya Olympiad School Logo" class="sponsor-logo">
+    <img src="2.png" alt="Robotics Logo" class="sponsor-logo">
+    <img src="3.png" alt="IM-25 Logo" class="sponsor-logo">
+  </div>
+
 </section>
 
 <footer>

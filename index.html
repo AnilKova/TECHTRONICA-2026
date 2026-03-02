@@ -74,8 +74,13 @@
   .event-desc{font-size:0.9rem;color:rgba(200,232,255,0.5);line-height:1.6;margin-bottom:1.4rem}
   .event-meta{margin-top:auto;display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;}
   .event-meta span{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--neon);background:rgba(0,245,255,0.08);padding:0.35rem 0.6rem;border:1px solid rgba(0,245,255,0.2)}
-  .btn-rulebook{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--dark);background:var(--acid);padding:0.45rem 1rem;text-decoration:none;font-weight:700;letter-spacing:0.1em;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);transition:all 0.25s;border:none;cursor:pointer}
-  .btn-rulebook:hover{background:#ccff00;box-shadow:0 0 18px rgba(170,255,0,0.5);transform:translateY(-1px)}
+
+  /* ===== RULEBOOK BUTTON — OPEN ONCE ===== */
+  .btn-rulebook{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--dark);background:var(--acid);padding:0.45rem 1rem;text-decoration:none;font-weight:700;letter-spacing:0.1em;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);transition:all 0.25s;border:none;cursor:pointer;user-select:none}
+  .btn-rulebook:hover:not(.opened){background:#ccff00;box-shadow:0 0 18px rgba(170,255,0,0.5);transform:translateY(-1px)}
+  .btn-rulebook.opened{background:rgba(170,255,0,0.15);color:var(--acid);border:1px solid rgba(170,255,0,0.4);cursor:default;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);box-shadow:none;transform:none;pointer-events:none;}
+  .btn-rulebook.opened::before{content:'✓ '}
+
   /* ===== SCHEDULE ===== */
   #schedule{background:var(--dark)}
   .schedule-tabs{display:flex;gap:0.4rem;margin:2rem 0;border-bottom:1px solid rgba(0,245,255,0.15);flex-wrap:wrap}
@@ -96,7 +101,6 @@
   .badge-qf    {color:#ffaa00;border-color:#ffaa00;background:rgba(255,170,0,0.08)}
   .badge-sf    {color:#ff6600;border-color:#ff6600;background:rgba(255,102,0,0.08)}
   .badge-final {color:var(--acid);border-color:var(--acid);background:rgba(170,255,0,0.12);font-weight:700}
-  /* pipeline */
   .sched-pipeline{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.5rem;margin:2.5rem 0 2.8rem}
   .pipeline-step{display:flex;flex-direction:column;align-items:center;gap:0.5rem}
   .pipeline-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
@@ -106,7 +110,6 @@
   .pipeline-label{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:rgba(200,232,255,0.45);letter-spacing:0.1em;text-align:center;line-height:1.7}
   .pipeline-label span{display:block;font-size:0.66rem;color:var(--text);letter-spacing:0.12em}
   .pipeline-line{flex:1;height:1px;min-width:40px;max-width:100px;background:linear-gradient(90deg,rgba(0,245,255,0.3),rgba(170,255,0,0.3));margin-bottom:1.2rem}
-  /* day banners */
   .day-banner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem;background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.15);border-left:3px solid var(--neon);padding:0.9rem 1.2rem;margin-bottom:1rem}
   .day-banner-gold{background:rgba(255,170,0,0.05);border-color:rgba(255,170,0,0.2);border-left-color:#ffaa00}
   .day-banner-left{display:flex;flex-direction:column;gap:0.25rem}
@@ -118,20 +121,23 @@
   .dtag-green{color:var(--acid);border-color:rgba(170,255,0,0.35);background:rgba(170,255,0,0.07)}
   .dtag-gold {color:#ffaa00;border-color:rgba(255,170,0,0.4);background:rgba(255,170,0,0.08)}
   .parallel-item{border-left-color:rgba(170,255,0,0.4)!important;background:rgba(170,255,0,0.025);margin-left:1.5rem}
-  /* speakers */
+
+  /* ===== SPEAKERS — BIGGER AVATARS ===== */
   #speakers{background:var(--mid)}
   .speakers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-  .speaker-card{background:var(--panel);border:1px solid rgba(0,245,255,0.1);padding:1.8rem 1.5rem;text-align:center;transition:all 0.3s;position:relative;overflow:hidden}
+  .speaker-card{background:var(--panel);border:1px solid rgba(0,245,255,0.1);padding:2.2rem 1.5rem 1.8rem;text-align:center;transition:all 0.3s;position:relative;overflow:hidden}
   .speaker-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--neon),transparent);transform:scaleX(0);transition:transform 0.4s}
   .speaker-card:hover{border-color:rgba(0,245,255,0.35);transform:translateY(-4px)}.speaker-card:hover::after{transform:scaleX(1)}
-  .speaker-avatar{width:130px;height:130px;border-radius:50%;margin:0 auto 1.2rem;border:2px solid rgba(0,245,255,0.4);overflow:hidden;position:relative;box-shadow:0 0 15px rgba(0,245,255,0.15);transition:border-color 0.3s,box-shadow 0.3s}
-  .speaker-card:hover .speaker-avatar{border-color:rgba(0,245,255,0.8);box-shadow:0 0 25px rgba(0,245,255,0.3)}
+  /* Bigger avatar — 170px desktop */
+  .speaker-avatar{width:170px;height:170px;border-radius:50%;margin:0 auto 1.4rem;border:2px solid rgba(0,245,255,0.4);overflow:hidden;position:relative;box-shadow:0 0 20px rgba(0,245,255,0.15);transition:border-color 0.3s,box-shadow 0.3s}
+  .speaker-card:hover .speaker-avatar{border-color:rgba(0,245,255,0.8);box-shadow:0 0 30px rgba(0,245,255,0.35)}
   .speaker-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;transition:transform 0.5s}
   .speaker-card:hover .speaker-avatar img{transform:scale(1.08)}
-  .speaker-name{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;color:#fff;margin-bottom:0.3rem}
-  .speaker-role{font-size:0.76rem;color:var(--acid);margin-bottom:0.25rem;font-family:'Share Tech Mono',monospace}
-  .speaker-org{font-size:0.7rem;color:rgba(200,232,255,0.33)}
-  /* venue */
+  .speaker-name{font-family:'Orbitron',monospace;font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:0.35rem}
+  .speaker-role{font-size:0.8rem;color:var(--acid);margin-bottom:0.3rem;font-family:'Share Tech Mono',monospace}
+  .speaker-org{font-size:0.72rem;color:rgba(200,232,255,0.33)}
+
+  /* ===== VENUE ===== */
   #venue{background:var(--dark)}
   .venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
   .venue-map{background:var(--panel);border:1px solid rgba(0,245,255,0.15);height:380px;overflow:hidden;position:relative}
@@ -146,7 +152,8 @@
   .venue-detail strong{color:#fff;display:block;margin-bottom:0.15rem;font-size:0.9rem}
   .map-open-btn{display:inline-flex;align-items:center;gap:0.6rem;margin-top:1.2rem;font-family:'Share Tech Mono',monospace;font-size:0.76rem;color:var(--neon);text-decoration:none;border:1px solid rgba(0,245,255,0.35);padding:0.6rem 1.2rem;transition:all 0.3s;letter-spacing:0.1em;background:rgba(0,245,255,0.05);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
   .map-open-btn:hover{background:rgba(0,245,255,0.14);border-color:var(--neon);box-shadow:0 0 20px rgba(0,245,255,0.25);color:#fff}
-  /* register */
+
+  /* ===== REGISTER ===== */
   #register{background:linear-gradient(135deg,var(--mid) 0%,#0a1f12 50%,var(--mid) 100%);text-align:center}
   #register .section-title{text-align:center}#register .section-desc{margin:1rem auto;text-align:center}
   .reg-tiers{display:flex;justify-content:center;gap:1.5rem;margin:3rem 0;flex-wrap:wrap}
@@ -166,18 +173,17 @@
   .notice-box p{font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--neon);letter-spacing:0.08em}
   .contact-note{font-family:'Share Tech Mono',monospace;font-size:0.76rem;color:rgba(200,232,255,0.3);margin-top:0.5rem}
   .contact-note a{color:var(--neon);text-decoration:none}
-  
-  /* SPONSORS & LOGOS */
+
+  /* ===== SPONSORS — ONE ROW LOGOS ===== */
   #sponsors{background:var(--dark);border-top:1px solid rgba(0,245,255,0.08);padding:3rem 5%}
   .sponsors-title{text-align:center;font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:rgba(200,232,255,0.3);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:2rem}
   .sponsors-row{display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
   .sponsor-item{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;color:rgba(200,232,255,0.2);letter-spacing:0.1em;transition:color 0.3s;padding:0.5rem 1rem;border:1px solid rgba(200,232,255,0.08);cursor:default;text-align:center}
   .sponsor-item:hover{color:rgba(200,232,255,0.6);border-color:rgba(0,245,255,0.2)}
-  
-  /* Clean Transparent Logos CSS */
-  .sponsor-logos { display: flex; justify-content: center; align-items: center; gap: 4rem; flex-wrap: wrap; margin-top: 3rem; }
-  .sponsor-logo { height: 110px; width: auto; max-width: 220px; object-fit: contain; transition: transform 0.4s ease, filter 0.4s ease; filter: drop-shadow(0 0 5px rgba(0,245,255,0.1)); }
-  .sponsor-logo:hover { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(0,245,255,0.6)); }
+  /* ONE ROW on all screens */
+  .sponsor-logos{display:flex;justify-content:center;align-items:center;gap:3rem;flex-wrap:nowrap;margin-top:3rem;overflow-x:auto;padding-bottom:0.5rem}
+  .sponsor-logo{height:110px;width:auto;max-width:180px;flex-shrink:0;object-fit:contain;transition:transform 0.4s ease,filter 0.4s ease;filter:drop-shadow(0 0 5px rgba(0,245,255,0.1))}
+  .sponsor-logo:hover{transform:scale(1.1);filter:drop-shadow(0 0 20px rgba(0,245,255,0.6))}
 
   /* FOOTER */
   footer{background:var(--panel);border-top:1px solid rgba(0,245,255,0.1);padding:3rem 5%;position:relative;z-index:1}
@@ -197,6 +203,8 @@
   .particle{position:absolute;width:2px;height:2px;background:var(--neon);border-radius:50%;opacity:0;animation:particleFly var(--dur) var(--delay) linear infinite}
   @keyframes particleFly{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:0.8}90%{opacity:0.3}100%{transform:translateY(-100px) translateX(var(--drift));opacity:0}}
   .reveal{opacity:0;transform:translateY(35px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+
+  /* ===== TABLET ===== */
   @media(max-width:1024px){
     nav{padding:0.9rem 1.8rem}.menu-toggle{display:block}
     nav ul{position:fixed;top:0;right:-100%;height:100vh;width:260px;background:rgba(5,10,15,0.97);backdrop-filter:blur(15px);flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:right 0.3s ease-in-out;border-left:1px solid rgba(0,245,255,0.2);z-index:1001}
@@ -206,7 +214,14 @@
     .venue-grid{grid-template-columns:1fr;gap:2rem}.venue-map{height:300px}
     .tier-card{width:calc(50% - 0.75rem);max-width:320px}.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
     section{padding:4.5rem 4%}
+    /* Tablet speaker avatar */
+    .speaker-avatar{width:150px;height:150px}
+    /* Tablet logos — still one row, shrink if needed */
+    .sponsor-logos{gap:2rem}
+    .sponsor-logo{height:90px;max-width:150px}
   }
+
+  /* ===== MOBILE ===== */
   @media(max-width:600px){
     nav{padding:0.8rem 1.1rem}.logo{font-size:0.88rem;letter-spacing:0.1em}
     #hero{padding-top:68px;padding-left:0.9rem;padding-right:0.9rem;min-height:100svh}
@@ -241,22 +256,24 @@
     .schedule-item{grid-template-columns:1fr;gap:0.35rem;padding:0.85rem 0.9rem}.parallel-item{margin-left:0.5rem}
     .sch-time{font-size:0.78rem}.sch-event{font-size:0.86rem}.sch-venue{font-size:0.72rem}
     .sch-badge{font-size:0.58rem;align-self:flex-start;margin-top:0.2rem}
-    .speakers-grid{grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem}
-    .speaker-card{padding:1.3rem 0.9rem}.speaker-avatar{width:90px;height:90px}
-    .speaker-name{font-size:0.7rem}.speaker-role{font-size:0.65rem}.speaker-org{font-size:0.6rem}
+    /* MOBILE — bigger speaker avatars, 2-col grid */
+    .speakers-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:1.8rem}
+    .speaker-card{padding:1.5rem 0.8rem 1.2rem}
+    .speaker-avatar{width:110px;height:110px;margin-bottom:1rem}
+    .speaker-name{font-size:0.74rem}.speaker-role{font-size:0.67rem}.speaker-org{font-size:0.6rem}
     .venue-map{height:230px}.venue-info h3{font-size:1.05rem}
     .venue-detail{gap:0.7rem;margin-bottom:0.8rem}.venue-detail p,.venue-detail strong{font-size:0.82rem}
     .map-open-btn{font-size:0.66rem;padding:0.5rem 0.9rem;margin-top:1rem}
     .tier-card{width:100%;max-width:100%;clip-path:none;padding:2rem 1.5rem}
     .notice-box{clip-path:none;padding:1rem;width:100%}.notice-box p{font-size:0.65rem;letter-spacing:0.04em}
-    .contact-note{font-size:0.68rem}
+    /* Contact note — wrap nicely on mobile */
+    .contact-note{font-size:0.68rem;line-height:1.8;display:flex;flex-direction:column;align-items:center;gap:0.3rem}
+    .contact-note .contact-sep{display:none}
     #sponsors{padding:2.2rem 1.1rem}.sponsors-title{font-size:0.62rem;letter-spacing:0.18em}
     .sponsors-row{gap:0.8rem}.sponsor-item{font-size:0.72rem;padding:0.4rem 0.6rem;letter-spacing:0.05em}
-    
-    /* Shrink logos on mobile */
-    .sponsor-logos { gap: 2rem; margin-top: 2rem; flex-direction: column; }
-    .sponsor-logo { height: 90px; }
-
+    /* MOBILE — logos ONE ROW, smaller */
+    .sponsor-logos{gap:1.2rem;margin-top:2rem;flex-wrap:nowrap;justify-content:center;overflow-x:auto;padding:0.5rem}
+    .sponsor-logo{height:70px;max-width:90px}
     .footer-grid{grid-template-columns:1fr;gap:1.6rem}.footer-brand .logo{font-size:1rem}.footer-desc{font-size:0.8rem}
     footer h4{font-size:0.63rem;margin-bottom:0.7rem}footer ul li a{font-size:0.8rem}
     .footer-bottom{flex-direction:column;align-items:flex-start;font-size:0.63rem;gap:0.8rem}
@@ -267,6 +284,7 @@
     .hero-date .date-line{font-size:0.62rem}.hero-date .venue-line{font-size:0.58rem}
     .count-num{font-size:1.25rem}.count-sep{font-size:1rem}.count-label{font-size:0.4rem}
     .speakers-grid{grid-template-columns:1fr}
+    .speaker-avatar{width:130px;height:130px}
   }
 </style>
 </head>
@@ -340,12 +358,12 @@
   <h2 class="section-title reveal">FEATURED <em>EVENTS</em></h2>
   <p class="section-desc reveal">Six electrifying competitions — race, tackle, duel, think and conquer. Only the boldest bots prevail.</p>
   <div class="events-grid">
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="1.jpg" alt="Robo Race" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO RACE</div><div class="event-desc">Build the fastest autonomous bot and blaze through a challenging track layout. Speed, precision and smart navigation win the crown.</div><div class="event-meta"><a href="a.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="2.jpg" alt="Robo Soccer" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO SOCCER</div><div class="event-desc">Engineer your bot to dribble, dodge and score goals. Team-based robot soccer with real-time strategy and control challenges.</div><div class="event-meta"><a href="b.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="3.jpg" alt="Robo Kabaddi" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO KABADDI</div><div class="event-desc">A uniquely Indian twist — robots tag, evade and return in a digital kabaddi arena. Agility and strategy are your greatest weapons.</div><div class="event-meta"><a href="c.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="4.jpg" alt="Robo Sumo" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO SUMO</div><div class="event-desc">Two bots enter, one remains. Force your opponent out of the ring in this raw test of power, weight distribution and control.</div><div class="event-meta"><a href="d.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="5.jpg" alt="All Terrain Race" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ALL TERRAIN RACE</div><div class="event-desc">Mud, ramps, obstacles and uneven ground — design a bot tough enough to conquer every surface in this ultimate endurance race.</div><div class="event-meta"><a href="e.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
-    <div class="event-card reveal"><div class="event-img-wrapper"><img src="6.jpg" alt="Logic Robots" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">LOGIC ROBOTS</div><div class="event-desc">Program your bot to solve logic puzzles, mazes and sequential challenges autonomously. The sharpest algorithm wins — no brute force allowed.</div><div class="event-meta"><a href="f.pdf" target="_blank" class="btn-rulebook">📄 RULE BOOK</a></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="1.jpg" alt="Robo Race" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO RACE</div><div class="event-desc">Build the fastest autonomous bot and blaze through a challenging track layout. Speed, precision and smart navigation win the crown.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="a.pdf">📄 RULE BOOK</button></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="2.jpg" alt="Robo Soccer" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO SOCCER</div><div class="event-desc">Engineer your bot to dribble, dodge and score goals. Team-based robot soccer with real-time strategy and control challenges.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="b.pdf">📄 RULE BOOK</button></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="3.jpg" alt="Robo Kabaddi" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO KABADDI</div><div class="event-desc">A uniquely Indian twist — robots tag, evade and return in a digital kabaddi arena. Agility and strategy are your greatest weapons.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="c.pdf">📄 RULE BOOK</button></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="4.jpg" alt="Robo Sumo" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ROBO SUMO</div><div class="event-desc">Two bots enter, one remains. Force your opponent out of the ring in this raw test of power, weight distribution and control.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="d.pdf">📄 RULE BOOK</button></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="5.jpg" alt="All Terrain Race" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">ALL TERRAIN RACE</div><div class="event-desc">Mud, ramps, obstacles and uneven ground — design a bot tough enough to conquer every surface in this ultimate endurance race.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="e.pdf">📄 RULE BOOK</button></div></div></div>
+    <div class="event-card reveal"><div class="event-img-wrapper"><img src="6.jpg" alt="Logic Robots" class="event-img"></div><div class="event-content"><div class="event-cat">COMPETITION</div><div class="event-name">LOGIC ROBOTS</div><div class="event-desc">Program your bot to solve logic puzzles, mazes and sequential challenges autonomously. The sharpest algorithm wins — no brute force allowed.</div><div class="event-meta"><button class="btn-rulebook" data-pdf="f.pdf">📄 RULE BOOK</button></div></div></div>
   </div>
 </section>
 
@@ -488,21 +506,22 @@
     </div>
   </div>
   <div class="notice-box reveal"><p>📋 SPOT REGISTRATION OPENS DAILY FROM 9:00 AM AT THE GANGA MAIN ENTRANCE</p></div>
-  <p class="contact-note reveal">Questions? Email <a href="mailto:Anilkova4027@gmail.com" style="color:var(--neon); text-decoration:none;">Anilkova4027@gmail.com</a>  |  <a href="tel:+919949613433" style="color:var(--neon); text-decoration:none;">+91 9949613433</a></p>
+  <p class="contact-note reveal">
+    Questions? <a href="mailto:Anilkova4027@gmail.com">Anilkova4027@gmail.com</a>
+    <span class="contact-sep"> | </span>
+    <a href="tel:+919949613433">+91 9949613433</a>
+  </p>
 </section>
 
 <section id="sponsors">
   <p class="sponsors-title reveal">POWERED BY & SUPPORTED BY</p>
-  
   <div class="sponsors-row reveal"><div class="sponsor-item">KAKATIYA JUNIOR COLLEGE</div><div class="sponsor-item">KAKATIYA IIT & MEDICAL ACADEMY</div></div>
   <div class="sponsors-row reveal"><div class="sponsor-item">KAKATIYA INSTITUTE OF TECHNOLOGY & SCIENCE FOR WOMEN</div></div>
-  
   <div class="sponsor-logos reveal">
     <img src="1.png" alt="Kakatiya Olympiad School Logo" class="sponsor-logo">
     <img src="2.png" alt="Robotics Logo" class="sponsor-logo">
     <img src="3.png" alt="IM-25 Logo" class="sponsor-logo">
   </div>
-
 </section>
 
 <footer>
@@ -522,35 +541,50 @@
 </footer>
 
 <script>
+  // Mobile nav
   const menuBtn = document.getElementById('mobile-menu-btn');
   const navLinks = document.getElementById('nav-links');
   menuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
   navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('active')));
-  
+
+  // Countdown
   const eventDate = new Date('2026-03-23T09:00:00');
-  
   function updateCountdown() {
     const diff = eventDate - new Date();
-    if (diff <= 0) { 
-      ['days','hours','mins','secs'].forEach(id => document.getElementById(id).textContent='00'); 
-      return; 
-    }
+    if (diff <= 0) { ['days','hours','mins','secs'].forEach(id => document.getElementById(id).textContent='00'); return; }
     document.getElementById('days').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
     document.getElementById('hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
     document.getElementById('mins').textContent  = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
     document.getElementById('secs').textContent  = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
   }
-  
-  setInterval(updateCountdown, 1000); 
+  setInterval(updateCountdown, 1000);
   updateCountdown();
-  
-  function switchTab(btn,id) {
+
+  // Schedule tabs
+  function switchTab(btn, id) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active'); 
+    btn.classList.add('active');
     document.getElementById(id).classList.add('active');
   }
-  
+
+  // ===== RULEBOOK BUTTON — OPEN ONCE =====
+  // Track which PDFs have been opened in this session
+  const openedPdfs = new Set();
+  document.querySelectorAll('.btn-rulebook').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const pdf = this.dataset.pdf;
+      if (openedPdfs.has(pdf)) return; // already opened — do nothing
+      openedPdfs.add(pdf);
+      window.open(pdf, '_blank');
+      // Visually mark as opened
+      this.classList.add('opened');
+      this.textContent = '✓ RULE BOOK';
+      this.title = 'Already opened';
+    });
+  });
+
+  // Particles
   const container = document.getElementById('particles');
   for (let i = 0; i < 35; i++) {
     const p = document.createElement('div');
@@ -558,16 +592,13 @@
     p.style.cssText = `left:${Math.random()*100}%;--dur:${4+Math.random()*8}s;--delay:-${Math.random()*10}s;--drift:${(Math.random()-0.5)*200}px;`;
     container.appendChild(p);
   }
-  
+
+  // Scroll reveal
   const ro = new IntersectionObserver((entries, obs) => {
     entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.classList.add('active');
-        obs.unobserve(e.target);
-      }
-    })
+      if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); }
+    });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  
   document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
